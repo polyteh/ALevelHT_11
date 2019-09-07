@@ -30,7 +30,7 @@ namespace GameLib.Player
 
 
             this.RegisterAnswer(answer);
-            Console.WriteLine($"Player {this.Name,10} trn is {answer,3}");
+            //Console.WriteLine($"Player {this.Name,10} trn is {answer,3}");
             return answer;
 
         }

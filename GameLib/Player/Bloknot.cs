@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace GameLib.Player
 {
-    class Bloknot:GeneralPlayer
+    public class Bloknot:GeneralPlayer
     {
 
         public Bloknot(string playerName, byte playerNumber) : base(playerName, playerNumber)
@@ -31,7 +31,7 @@ namespace GameLib.Player
 
 
             this.RegisterAnswer(answer);
-            Console.WriteLine($"Player {this.Name,10} trn is {answer,3}");
+            //Console.WriteLine($"Player {this.Name,10} trn is {answer,3}");
             return answer;
 
         }

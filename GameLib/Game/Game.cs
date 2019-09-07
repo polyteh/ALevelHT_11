@@ -9,43 +9,57 @@ namespace GameLib.Game
 {
     public class Game
     {
-        private int curTurnNumber=0;
+        //fields
+
+        // number of turns
+        private int curTurnNumber = 0;
+        /// <summary>
+        /// minimum value to guess
+        /// </summary>
         private readonly int minValue = 40;
+        /// <summary>
+        /// maximum value to guess
+        /// </summary>
         private readonly int maxnValue = 140;
 
+        /// <summary>
+        /// List of players
+        /// </summary>
         private List<GeneralPlayer> curPlayers;
+
+        /// <summary>
+        /// make new game
+        /// </summary>
+        /// <param name="_guessValue">value to guess</param>
+        /// <param name="_numberOfTurns">maximum number of turns</param>
         public Game(int _guessValue, int _numberOfTurns)
         {
-            this.GuessValue = _guessValue;
+            // normalization to work with arrays without shift
+            this.GuessValue = _guessValue - minValue;
             this.MaxNumberOfTurns = _numberOfTurns;
-            GeneralPlayer.SetGuessLimits(0,11);//need +1 from to range 0..10
+            GeneralPlayer.SetGuessLimits(0, maxnValue - minValue + 1);//need +1 from to range [40..140]
             curPlayers = new List<GeneralPlayer>();
         }
-        public int GuessValue { get; private set; }
-        //private IPlayerActions PlayerMakeTurn { get; set; }
+
+        // properties
+        protected int GuessValue { get; private set; }
         public int MaxNumberOfTurns { get; set; }
 
+        // methods
+
+        /// <summary>
+        /// start the game
+        /// </summary>
+        /// <returns>return player as GeneralPlayer if somebody guessed  overwise return null</returns>
         public GeneralPlayer PlayGame()
         {
-            RegularPlayer myRegularPlayer = new RegularPlayer("vasya", 1);
-            UberPlayer myUberPlayer = new UberPlayer("petya", 2);
-            Bloknot myBloknotPlayer = new Bloknot("serg", 3);
-            Cheater myCheaterPlayer = new Cheater("gomer", 4);
-            UberCheater myUberCheaterPlayer = new UberCheater("mozzg", 5);
-
-            curPlayers.Add(myRegularPlayer);
-            curPlayers.Add(myUberPlayer);
-            curPlayers.Add(myBloknotPlayer);
-            curPlayers.Add(myCheaterPlayer);
-            curPlayers.Add(myUberCheaterPlayer);
-
             bool continueGame = true;
 
             do
             {
                 foreach (var player in curPlayers)
                 {
-                    if (curTurnNumber>=this.MaxNumberOfTurns)
+                    if (curTurnNumber >= this.MaxNumberOfTurns)
                     {
                         continueGame = false;
                         return null;
@@ -63,16 +77,19 @@ namespace GameLib.Game
                 }
 
             } while (continueGame);
-
-
             return null;
 
         }
 
+        /// <summary>
+        /// player turns
+        /// </summary>
+        /// <param name="curPlayer">player, who make the turn</param>
+        /// <returns>true if right answer overwise false</returns>
         private bool NextTurn(GeneralPlayer curPlayer)
         {
             int curAnswer = curPlayer.MakeTurn();
-            Console.WriteLine($"Cur answer{curAnswer}");
+            /// Console.WriteLine($"Cur answer{curAnswer}");
 
             if (this.GuessValue == curAnswer)
             {
@@ -86,6 +103,10 @@ namespace GameLib.Game
             }
         }
 
+        /// <summary>
+        /// if nobode gave right answer, return player who gave the nearest valu
+        /// </summary>
+        /// <returns></returns>
         public GeneralPlayer GetNearestResult()
         {
 
@@ -98,6 +119,10 @@ namespace GameLib.Game
             return nearestPlayer;
         }
 
+        /// <summary>
+        /// add new player to the game
+        /// </summary>
+        /// <param name="_newPlayer"></param>
         public void AddPlayer(GeneralPlayer _newPlayer)
         {
             curPlayers.Add(_newPlayer);

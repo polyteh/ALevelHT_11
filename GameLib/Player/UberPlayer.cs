@@ -21,7 +21,7 @@ namespace GameLib.Player
 
             this.RegisterAnswer(answerToReturn);
     
-            Console.WriteLine($"Player {this.Name,10} trn is {answerByOrder,3}");
+            //Console.WriteLine($"Player {this.Name,10} trn is {answerByOrder,3}");
             answerByOrder++;
             return answerToReturn;
 
